@@ -3,8 +3,10 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
+import entities.Chef;
 import entities.Employee;
 import entities.KitchenAssistant;
+import entities.Waiter;
 
 public class EmployeeRegistration {
 
@@ -30,6 +32,31 @@ public class EmployeeRegistration {
 		return tempEmployeeList;
 	}
 
+	public static List<Employee> getWaiter() {
+		List<Employee> tempEmployeeList = new ArrayList<>();
+
+		for (Employee tempEmp : employeeList) {
+			if (tempEmp instanceof Waiter) {
+				tempEmployeeList.add(tempEmp);
+			}
+		}
+
+		return tempEmployeeList;
+	}
+
+	public static List<Employee> getChef() {
+		List<Employee> tempEmployeeList = new ArrayList<>();
+
+		for (Employee tempEmp : employeeList) {
+			if (tempEmp instanceof Chef) {
+				tempEmployeeList.add(tempEmp);
+			}
+		}
+
+		return tempEmployeeList;
+	}
+
+	
 	public static boolean remove(Integer id) {
 
 		for (Employee tempEmp : employeeList) {
@@ -43,12 +70,27 @@ public class EmployeeRegistration {
 
 	}
 
-	public static void edit(Integer id, String newName) {
+	public static void editEmp(Integer id, String newName) {
 		for (Employee tempEmp : employeeList) {
-			if (tempEmp.getId() == id) {
+			if (tempEmp.getId().equals(id)) {
 				tempEmp.setName(newName);
-			} else {
-				System.out.println("Este id não corresponde a nenhum funcionário!");
+			}
+		}
+	}
+	
+	public static boolean verify(Integer id) {
+		for (Employee tempEmp : employeeList) {
+			if (tempEmp.getId().equals(id)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public static void search(Integer id) {
+		for (Employee tempEmp : employeeList) {
+			if (tempEmp.getId().equals(id)) {
+				System.out.println(tempEmp);
 			}
 		}
 	}
@@ -57,6 +99,10 @@ public class EmployeeRegistration {
 		for(Employee tempEmp : employeeList) {
 			System.out.println(tempEmp);
 		}
+	}
+	
+	public static void removeAll() {
+		employeeList.clear();
 	}
 	
 	

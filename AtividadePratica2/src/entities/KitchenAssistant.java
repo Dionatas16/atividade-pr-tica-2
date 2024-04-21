@@ -20,7 +20,7 @@ public class KitchenAssistant extends Employee{
 	@Override
 	public String toString() {
 		return super.toString() + 
-				"\nSpeciality: " + speciality;
+				"\nEspecialidade: " + speciality;
 	}
 
 	

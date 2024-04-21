@@ -1,7 +1,9 @@
 package application;
 
+import entities.Chef;
 import entities.Employee;
 import entities.KitchenAssistant;
+import entities.Waiter;
 import utilities.Console;
 
 public class OperatingSystem {
@@ -18,8 +20,10 @@ public class OperatingSystem {
 		System.out.println("7- Editar funcionário");
 		System.out.println("8- Remover funcionário");
 		System.out.println("9- Listar todos os funcionários");
+		System.out.println("10- Buscar funcionário");
+		System.out.println("11- Excluir todos os funcionários");
 		System.out.println("0- Sair");
-		System.out.print("Selecione uma opção:");
+		System.out.print("Selecione uma opção: ");
 
 	}
 
@@ -32,15 +36,15 @@ public class OperatingSystem {
 
 		case 1:
 
-			System.out.println("\nCadastro de Chef de Cozinha:");
+			System.out.println("Cadastro de Chef de Cozinha:");
 			System.out.print("Nome: ");
 			name = Console.lerString();
-			System.out.print("\nId: ");
+			System.out.print("Id: ");
 			id = Console.lerInt();
-			System.out.print("\n Anos de experiência: ");
+			System.out.print("Anos de experiência: ");
 			Integer experienceYears = Console.lerInt();
 
-			Chef chef = new Chef();
+			Chef chef = new Chef(name, id, experienceYears);
 
 			EmployeeRegistration.register(chef);
 
@@ -50,15 +54,15 @@ public class OperatingSystem {
 
 		case 2:
 
-			System.out.println("\nCadastro de Garçom:");
+			System.out.println("Cadastro de Garçom:");
 			System.out.print("Nome: ");
 			name = Console.lerString();
-			System.out.print("\nId: ");
+			System.out.print("Id: ");
 			id = Console.lerInt();
-			System.out.print("\nDias Trabalhados ");
+			System.out.print("Dias Trabalhados: ");
 			Integer workedDays = Console.lerInt();
 
-			Waiter waiter = new Waiter();
+			Waiter waiter = new Waiter(name, id, workedDays);
 
 			EmployeeRegistration.register(waiter);
 
@@ -66,17 +70,17 @@ public class OperatingSystem {
 			break;
 		case 3:
 
-			System.out.println("\nCadastro de Auxiliar de Cozinha:");
+			System.out.println("Cadastro de Auxiliar de Cozinha:");
 			System.out.print("Nome: ");
 			name = Console.lerString();
-			System.out.print("\nId: ");
+			System.out.print("Id: ");
 			id = Console.lerInt();
-			System.out.print("\nEspecialidade: ");
+			System.out.print("Especialidade: ");
 			String speciality = Console.lerString();
 
 			KitchenAssistant kitchenAssistant = new KitchenAssistant(name, id, speciality);
 
-			EmployeeRegistration.register(chef);
+			EmployeeRegistration.register(kitchenAssistant);
 
 			System.out.println("Auxiliar de Cozinha adicionado com sucesso!");
 			break;
@@ -116,10 +120,13 @@ public class OperatingSystem {
 			System.out.println("Editar funcionário: \n");
 			System.out.print("Insira o id do funcionário que deseja editar: ");
 			id = Console.lerInt();
-			System.out.println("Insira o novo nome do funcionário: ");
-			newName = Console.lerString();
-			EmployeeRegistration.edit(id, newName);
-
+			if (EmployeeRegistration.verify(id)) {
+				System.out.println("Insira o novo nome do funcionário: ");
+				newName = Console.lerString();
+				EmployeeRegistration.editEmp(id, newName);
+			} else {
+				System.out.println("Este id não pertence a nenhum funcionário!");
+			}
 			break;
 
 		case 8:
@@ -138,6 +145,24 @@ public class OperatingSystem {
 
 			System.out.println("========== Lista de Funcionários ===========");
 			EmployeeRegistration.listAll();
+			break;
+
+		case 10:
+			System.out.println("Buscar funcionário: \n");
+			System.out.print("Insira o id do funcionário que deseja buscar: ");
+			id = Console.lerInt();
+			if (EmployeeRegistration.verify(id)) {
+				EmployeeRegistration.search(id);
+			} else {
+				System.out.println("Este id não pertence a nenhum funcionário!");
+			}
+			break;
+
+		case 11:
+
+			System.out.println("Todos os funcionários foram excluídos!");
+			EmployeeRegistration.removeAll();
+			break;
 
 		case 0:
 
@@ -156,7 +181,7 @@ public class OperatingSystem {
 	public static void execute() {
 
 		int opt;
-		
+
 		do {
 
 			Menu();
